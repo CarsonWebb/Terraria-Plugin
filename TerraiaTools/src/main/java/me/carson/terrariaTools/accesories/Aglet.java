@@ -2,14 +2,20 @@ package me.carson.terrariaTools.accesories;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 
 public class Aglet implements Listener {
@@ -36,6 +42,32 @@ public class Aglet implements Listener {
         return aglet;
     }
 
+    public void startAgletTask(Plugin plugin) {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    boolean hasAglet = false;
+                    for (ItemStack item : player.getInventory().getContents()) {
+                        if (item != null && item.hasItemMeta() && "Aglet".equals(item.getItemMeta().getDisplayName())) {
+                            hasAglet = true;
+                            break;
+                        }
+                    }
 
+                    if (hasAglet) {
+                        // Give speed effect
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, true, false));
+                        // Duration 40 ticks = 2 seconds, refreshed every tick
+                    } else {
+                        // Remove speed if they don't have it
+                        if (player.hasPotionEffect(PotionEffectType.SPEED)) {
+                            player.removePotionEffect(PotionEffectType.SPEED);
+                        }
+                    }
+                }
+            }
+        }.runTaskTimer(plugin, 0L, 40L); // Runs every two seconds
+    }
 
 }

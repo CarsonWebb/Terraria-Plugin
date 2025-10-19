@@ -56,6 +56,9 @@ public class TTCommand implements CommandExecutor, TabCompleter {
                     case "cloud_bottle"-> {
                         player.getInventory().addItem(plugin.cloudInBottle.createItem());
                     }
+                    case "aglet"-> {
+                        player.getInventory().addItem(plugin.aglet.createItem());
+                    }
                     default -> player.sendMessage("§cUnknown item: " + itemName);
                 }
             }
@@ -74,7 +77,7 @@ public class TTCommand implements CommandExecutor, TabCompleter {
             StringUtil.copyPartialMatches(args[0], subCommands, completions);
         } else if (args.length == 2 && args[0].equalsIgnoreCase("give")) {
             // Second argument: item names
-            List<String> items = Arrays.asList("Cosmolight","Rod_of_Discord","Momentum_Capacitor","Stormbow","cloud_bottle");
+            List<String> items = Arrays.asList("Cosmolight","Rod_of_Discord","Momentum_Capacitor","Stormbow","cloud_bottle","aglet");
             StringUtil.copyPartialMatches(args[1], items, completions);
         }
 

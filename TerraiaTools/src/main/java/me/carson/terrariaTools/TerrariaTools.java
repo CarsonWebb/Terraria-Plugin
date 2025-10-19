@@ -1,5 +1,6 @@
 package me.carson.terrariaTools;
 
+import me.carson.terrariaTools.accesories.Aglet;
 import me.carson.terrariaTools.accesories.CloudInBottle;
 import me.carson.terrariaTools.tools.Cosmolight;
 import me.carson.terrariaTools.tools.MomentumCapacitor;
@@ -16,6 +17,7 @@ public final class TerrariaTools extends JavaPlugin {
     MomentumCapacitor momentumCapacitor;
     Stormbow stormbow;
     CloudInBottle cloudInBottle;
+    Aglet aglet;
 
     @Override
     public void onEnable() {
@@ -23,6 +25,8 @@ public final class TerrariaTools extends JavaPlugin {
         rodOfDiscord=new RodOfDiscord(this);
         momentumCapacitor=new MomentumCapacitor(this);
         stormbow=new Stormbow(this);
+        aglet=new Aglet(this);
+        aglet.startAgletTask(this);
         //cloudInBottle=new CloudInBottle(this);
 
         getServer().getPluginManager().registerEvents(new ResourcePackHandler(), this);
