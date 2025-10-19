@@ -86,7 +86,6 @@ public class CloudInBottle implements Listener {
     public void onJump(PlayerJumpEvent event){
         Player player = event.getPlayer();
         player.setAllowFlight(true);
-        player.sendMessage("Jumped");
     }
 
     private boolean hasBottle(Player player) {

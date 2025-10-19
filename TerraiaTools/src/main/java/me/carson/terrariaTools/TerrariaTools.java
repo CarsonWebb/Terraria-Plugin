@@ -23,7 +23,7 @@ public final class TerrariaTools extends JavaPlugin {
         rodOfDiscord=new RodOfDiscord(this);
         momentumCapacitor=new MomentumCapacitor(this);
         stormbow=new Stormbow(this);
-        cloudInBottle=new CloudInBottle(this);
+        //cloudInBottle=new CloudInBottle(this);
 
         getServer().getPluginManager().registerEvents(new ResourcePackHandler(), this);
         TTCommand ttCommand = new TTCommand(this);
