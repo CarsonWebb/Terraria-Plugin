@@ -24,7 +24,6 @@ public class CloudInBottle implements Listener {
 
     private final NamespacedKey key;
     private final NamespacedKey uncraftableKey;
-    private boolean activated=false;
 
     public CloudInBottle(JavaPlugin plugin) {
         this.key = new NamespacedKey(plugin, "cloud");
@@ -72,30 +71,34 @@ public class CloudInBottle implements Listener {
         PersistentDataContainer data = meta.getPersistentDataContainer();
         if (!data.has(key, PersistentDataType.BYTE)) return;
 
-        if(!activated){
+        if(!meta.hasEnchantmentGlintOverride()){
             meta.setEnchantmentGlintOverride(true);
             item.setItemMeta(meta);
-            //meta.addEnchant(org.bukkit.enchantments.Enchantment.LUCK, 1, true);
-            //meta.addItemFlags(org.bukkit.inventory.ItemFlag.HIDE_ENCHANTS);
-            activated=true;
         }else{
             meta.setEnchantmentGlintOverride(false);
             item.setItemMeta(meta);
-            activated=false;
         }
     }
 
     @EventHandler
     public void onJump(PlayerJumpEvent event){
         Player player = event.getPlayer();
-        if(!player.getInventory().contains(createItem())){
-            return;
-        }
-        if(!player.isOnGround()){
+        if(!player.isOnGround()&&hasBottle(player)){
             player.setVelocity(player.getVelocity().add(new Vector(0,1,0)));
             player.getWorld().playSound(player.getLocation(), "minecraft:entity.breeze.wind_burst", 1f, 1f);
             player.getWorld().spawnParticle(org.bukkit.Particle.CLOUD, player.getLocation(), 20, 0.2, 0.2, 0.2, 0.05);
         }
+    }
+
+    private boolean hasBottle(Player player) {
+        for (ItemStack item : player.getInventory().getContents()) {
+            if (item == null || !item.hasItemMeta()) continue;
+            ItemMeta meta = item.getItemMeta();
+            if(meta.hasEnchantmentGlintOverride()&&(meta.getDisplayName().equals("Cloud in a Bottle"))){
+                return true;
+            }
+        }
+        return false;
     }
 
 }
