@@ -48,8 +48,7 @@ public class CloudInBottle implements Listener {
         if (!(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK)) return;
         Player player = event.getPlayer();
         ItemStack glass = player.getInventory().getItemInMainHand();
-        double height=player.getHeight();
-        player.sendMessage("Height: "+height);
+        double height=player.getLocation().getY();
         if(glass.getType() == Material.GLASS_BOTTLE&&((height>=180)&&(height<=200))){
             player.getInventory().remove(glass);
             player.getInventory().addItem(createItem());
