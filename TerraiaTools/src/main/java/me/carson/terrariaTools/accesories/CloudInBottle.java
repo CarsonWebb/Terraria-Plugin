@@ -4,20 +4,27 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class CloudInBottle implements Listener {
 
     private final NamespacedKey key;
+    private final NamespacedKey uncraftableKey;
 
     public CloudInBottle(JavaPlugin plugin) {
         this.key = new NamespacedKey(plugin, "cloud");
-        // Register event listener
+        this.uncraftableKey = new NamespacedKey(plugin, "uncraftable");
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
@@ -27,8 +34,23 @@ public class CloudInBottle implements Listener {
         meta.displayName(Component.text("Cloud in a Bottle", TextColor.fromHexString("#9696FF")));
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.getPersistentDataContainer().set(key, PersistentDataType.BYTE, (byte) 1);
-        meta.setItemModel(new NamespacedKey("terraria","cosmolight"));
+        meta.getPersistentDataContainer().set(uncraftableKey, PersistentDataType.BYTE, (byte) 1);
+        meta.setItemModel(new NamespacedKey("terraria","cloud_in_a_bottle"));
+        meta.setMaxStackSize(Integer.valueOf(1));
         cloud.setItemMeta(meta);
         return cloud;
+    }
+
+    @EventHandler
+    public void onRightClick(PlayerInteractEvent event) {
+        if (event.getItem() == null) return;
+        if (!(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK)) return;
+        Player player = event.getPlayer();
+        ItemStack glass = player.getInventory().getItemInMainHand();
+        double height=player.getHeight();
+        if(glass.getType() == Material.GLASS_BOTTLE&&((height>127)&&(height<133))){
+            player.getInventory().remove(glass);
+            player.getInventory().addItem(createItem());
+        }
     }
 }

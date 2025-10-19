@@ -34,8 +34,6 @@ public class MomentumCapacitor implements Listener {
     public MomentumCapacitor(JavaPlugin plugin) {
         this.key = new NamespacedKey(plugin, "capacitor");
         this.uncraftableKey = new NamespacedKey(plugin, "uncraftable");
-
-        // Register event listener
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
@@ -43,15 +41,14 @@ public class MomentumCapacitor implements Listener {
      * Creates the custom clock item with an identifying tag.
      */
     public ItemStack createItem() {
-        ItemStack item = new ItemStack(Material.BLAZE_ROD);
+        ItemStack item = new ItemStack(Material.HEAVY_CORE);
         ItemMeta meta = item.getItemMeta();
         meta.displayName(Component.text("Momentum Capacitor", TextColor.fromHexString("#FF96FF")));
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        //meta.addEnchant(Enchantment.UNBREAKING, 1, true);
-        //meta.addItemFlags(org.bukkit.inventory.ItemFlag.HIDE_ENCHANTS);
         meta.getPersistentDataContainer().set(uncraftableKey, PersistentDataType.BYTE, (byte) 1);
         meta.getPersistentDataContainer().set(key, PersistentDataType.BYTE, (byte) 1);
         meta.setItemModel(new NamespacedKey("terraria","momentum_capacitor"));
+        meta.setMaxStackSize(Integer.valueOf(1));
         item.setItemMeta(meta);
         return item;
     }

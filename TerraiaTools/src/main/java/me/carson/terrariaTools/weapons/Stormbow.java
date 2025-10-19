@@ -32,15 +32,13 @@ public class Stormbow implements Listener {
     }
 
     public ItemStack createItem() {
-        ItemStack bow = new ItemStack(Material.BLAZE_ROD);
+        ItemStack bow = new ItemStack(Material.BOW);
         ItemMeta meta = bow.getItemMeta();
-
         meta.displayName(Component.text("Daedalus Stormbow", TextColor.fromHexString("#D2A0FF")));
-        //meta.addEnchant(Enchantment.UNBREAKING, 1, true);
-        //meta.addItemFlags(org.bukkit.inventory.ItemFlag.HIDE_ENCHANTS);
         meta.getPersistentDataContainer().set(key, PersistentDataType.BYTE, (byte) 1);
         meta.getPersistentDataContainer().set(uncraftableKey, PersistentDataType.BYTE, (byte) 1);
         meta.setItemModel(new NamespacedKey("terraria","daedalus_stormbow"));
+        meta.setMaxStackSize(Integer.valueOf(1));
         bow.setItemMeta(meta);
         return bow;
     }

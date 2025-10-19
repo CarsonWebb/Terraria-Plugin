@@ -1,7 +1,6 @@
 package me.carson.terrariaTools.tools;
 
-import io.papermc.paper.datacomponent.DataComponentTypes;
-import net.kyori.adventure.key.Key;
+
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -32,14 +31,13 @@ public class Cosmolight implements Listener{
      * Creates the custom clock item with an identifying tag.
      */
     public ItemStack createItem() {
-        ItemStack item = new ItemStack(Material.BLAZE_ROD);
+        ItemStack item = new ItemStack(Material.CLOCK);
         ItemMeta meta = item.getItemMeta();
         meta.displayName(Component.text("Cosmolight", TextColor.fromHexString("#FF9696")));
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        //meta.addEnchant(Enchantment.UNBREAKING, 1, true);
-        //meta.addItemFlags(org.bukkit.inventory.ItemFlag.HIDE_ENCHANTS);
         meta.getPersistentDataContainer().set(key, PersistentDataType.BYTE, (byte) 1);
         meta.setItemModel(new NamespacedKey("terraria","cosmolight"));
+        meta.setMaxStackSize(Integer.valueOf(1));
         item.setItemMeta(meta);
         return item;
     }

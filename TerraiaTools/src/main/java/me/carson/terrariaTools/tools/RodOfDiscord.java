@@ -39,13 +39,11 @@ public class RodOfDiscord implements Listener {
     public ItemStack createItem() {
         ItemStack rod = new ItemStack(Material.BLAZE_ROD);
         ItemMeta meta = rod.getItemMeta();
-
         meta.displayName(Component.text("Rod of Discord", TextColor.fromHexString("#96FF0A")));
-        //meta.addEnchant(Enchantment.UNBREAKING, 1, true);
-        //meta.addItemFlags(org.bukkit.inventory.ItemFlag.HIDE_ENCHANTS);
         meta.getPersistentDataContainer().set(key, PersistentDataType.BYTE, (byte) 1);
         meta.getPersistentDataContainer().set(uncraftableKey, PersistentDataType.BYTE, (byte) 1);
         meta.setItemModel(new NamespacedKey("terraria","rod_of_discord"));
+        meta.setMaxStackSize(Integer.valueOf(1));
         rod.setItemMeta(meta);
         return rod;
     }
