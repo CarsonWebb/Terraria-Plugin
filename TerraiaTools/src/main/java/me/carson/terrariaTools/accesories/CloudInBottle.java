@@ -12,6 +12,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -83,11 +85,8 @@ public class CloudInBottle implements Listener {
     @EventHandler
     public void onJump(PlayerJumpEvent event){
         Player player = event.getPlayer();
-        if(!player.isOnGround()&&hasBottle(player)){
-            player.setVelocity(player.getVelocity().add(new Vector(0,1,0)));
-            player.getWorld().playSound(player.getLocation(), "minecraft:entity.breeze.wind_burst", 1f, 1f);
-            player.getWorld().spawnParticle(org.bukkit.Particle.CLOUD, player.getLocation(), 20, 0.2, 0.2, 0.2, 0.05);
-        }
+        player.setAllowFlight(true);
+        player.sendMessage("Jumped");
     }
 
     private boolean hasBottle(Player player) {
@@ -95,10 +94,35 @@ public class CloudInBottle implements Listener {
             if (item == null || !item.hasItemMeta()) continue;
             ItemMeta meta = item.getItemMeta();
             if(meta.hasEnchantmentGlintOverride()&&(meta.getDisplayName().equals("Cloud in a Bottle"))){
+                player.sendMessage("Has Bottle");
                 return true;
             }
         }
         return false;
+    }
+
+    @EventHandler
+    public void onPlayerToggleFlight(PlayerToggleFlightEvent event) {
+        Player player = event.getPlayer();
+        player.sendMessage("Detected Double Jump");
+        // Prevent actual flight
+        event.setCancelled(true);
+        player.setAllowFlight(false);
+        player.setFlying(false);
+        if(hasBottle(player)){
+            player.setVelocity(player.getVelocity().add(new Vector(0,1,0)));
+            player.getWorld().playSound(player.getLocation(), "minecraft:entity.breeze.wind_burst", 1f, 1f);
+            player.getWorld().spawnParticle(org.bukkit.Particle.CLOUD, player.getLocation(), 20, 0.2, 0.2, 0.2, 0.05);
+        }
+    }
+
+    @EventHandler
+    public void onPlayerMove(PlayerMoveEvent event) {
+        Player player = event.getPlayer();
+        if (player.isOnGround()) {
+            player.setAllowFlight(false);
+            player.setFlying(false);
+        }
     }
 
 }
