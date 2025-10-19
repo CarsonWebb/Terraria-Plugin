@@ -1,0 +1,8 @@
+name: TerrariaTools
+version: '1.0-SNAPSHOT'
+main: me.carson.terrariaTools.TerrariaTools
+api-version: '1.21'
+commands:
+  tt:
+    description: Terraria Tools main command
+    usage: /tt <subcommand>
