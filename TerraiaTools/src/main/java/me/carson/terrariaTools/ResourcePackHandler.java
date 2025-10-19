@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerResourcePackStatusEvent;
 public class ResourcePackHandler implements Listener {
 
     // Your direct HTTPS link to the pack
-    private static final String PACK_URL = "https://github.com/CarsonWebb/Terraria_Textures/releases/download/V4/Terrarria.Textures.zip";
+    private static final String PACK_URL = "https://github.com/CarsonWebb/Terraria_Textures/releases/download/V4/Terraria.Textures.zip";
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
