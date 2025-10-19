@@ -2,6 +2,7 @@ package me.carson.terrariaTools.accesories;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
@@ -48,7 +49,8 @@ public class CloudInBottle implements Listener {
         Player player = event.getPlayer();
         ItemStack glass = player.getInventory().getItemInMainHand();
         double height=player.getHeight();
-        if(glass.getType() == Material.GLASS_BOTTLE&&((height>127)&&(height<133))){
+        player.sendMessage("Height: "+height);
+        if(glass.getType() == Material.GLASS_BOTTLE&&((height>=180)&&(height<=200))){
             player.getInventory().remove(glass);
             player.getInventory().addItem(createItem());
         }
