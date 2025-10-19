@@ -1,5 +1,6 @@
 package me.carson.terrariaTools;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,7 +10,7 @@ import org.bukkit.event.player.PlayerResourcePackStatusEvent;
 public class ResourcePackHandler implements Listener {
 
     // Your direct HTTPS link to the pack
-    private static final String PACK_URL = "https://github.com/CarsonWebb/Terraria_Textures/releases/download/TTV3/Terrarria.Textures.zip";
+    private static final String PACK_URL = "https://github.com/CarsonWebb/Terraria_Textures/releases/download/V4/Terrarria.Textures.zip";
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
@@ -22,7 +23,7 @@ public class ResourcePackHandler implements Listener {
 
     @EventHandler
     public void onResourcePackStatus(PlayerResourcePackStatusEvent event) {
-        //Player player = event.getPlayer();
+        Player player = event.getPlayer();
         PlayerResourcePackStatusEvent.Status status = event.getStatus();
 
         switch (status) {
@@ -35,7 +36,7 @@ public class ResourcePackHandler implements Listener {
                 break;
 
             case SUCCESSFULLY_LOADED:
-                //player.sendMessage(ChatColor.GREEN + "Custom textures loaded successfully!");
+                player.sendMessage(ChatColor.GREEN + "Custom textures loaded successfully!");
                 break;
 
             case ACCEPTED:
