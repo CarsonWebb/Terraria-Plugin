@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -42,6 +43,12 @@ public class Aglet implements Listener {
         return aglet;
     }
 
+    public boolean isCustomAglet(ItemStack item){
+        ItemMeta meta = item.getItemMeta();
+        PersistentDataContainer data = meta.getPersistentDataContainer();
+        return data.has(key, PersistentDataType.BYTE);
+    }
+
     public void startAgletTask(Plugin plugin) {
         new BukkitRunnable() {
             @Override
@@ -49,7 +56,7 @@ public class Aglet implements Listener {
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     boolean hasAglet = false;
                     for (ItemStack item : player.getInventory().getContents()) {
-                        if (item != null && item.hasItemMeta() && "Aglet".equals(item.getItemMeta().getDisplayName())) {
+                        if (item != null && isCustomAglet(item)) {
                             hasAglet = true;
                             break;
                         }
