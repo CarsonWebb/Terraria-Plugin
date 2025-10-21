@@ -27,7 +27,6 @@ public class AccessoryManager implements Listener {
     public void startAccessoryTask(Plugin plugin) {
         Bukkit.getScheduler().runTaskTimer(plugin, () -> {
                 for (Player player : Bukkit.getOnlinePlayers()) {
-                    player.sendMessage("Checking Player");
                     for (ItemStack item : player.getInventory().getContents()) {
                         if (item != null) {
                             for (Accessory itemx : items) {
