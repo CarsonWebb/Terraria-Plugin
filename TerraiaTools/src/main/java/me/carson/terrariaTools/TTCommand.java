@@ -1,6 +1,7 @@
 package me.carson.terrariaTools;
 
 import me.carson.terrariaTools.TerrariaTools;
+import me.carson.terrariaTools.accesories.Aglet;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -57,7 +58,7 @@ public class TTCommand implements CommandExecutor, TabCompleter {
                         player.getInventory().addItem(plugin.cloudInBottle.createItem());
                     }
                     case "aglet"-> {
-                        player.getInventory().addItem(plugin.aglet.createItem());
+                        player.getInventory().addItem(Aglet.getItem(plugin));
                     }
                     default -> player.sendMessage("§cUnknown item: " + itemName);
                 }
