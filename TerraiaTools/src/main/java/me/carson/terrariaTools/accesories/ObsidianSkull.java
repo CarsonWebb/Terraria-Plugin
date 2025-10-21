@@ -9,20 +9,19 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+public class ObsidianSkull extends Accessory implements Listener {
 
-public class Aglet extends Accessory implements Listener  {
-
-    public Aglet(Plugin plugin){
-        super(plugin,"Aglet","#9696FF",Material.COPPER_INGOT,"aglet","Aglet",new NamespacedKey(plugin, "uncraftable"));
+    public ObsidianSkull(Plugin plugin){
+        super(plugin,"Obsidian Skull","#96FF96", Material.OBSIDIAN,"obsidian_skull","Skull",new NamespacedKey(plugin, "uncraftable"));
     }
 
     @Override
     public void activateEffect(Player player){
-        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 120, 0, true, false));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 120, 0, true, false));
     }
 
     public static ItemStack getItem(Plugin plugin) {
-        return new Aglet(plugin).createItem();
+        return new ObsidianSkull(plugin).createItem();
     }
 
 }

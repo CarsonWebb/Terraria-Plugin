@@ -36,7 +36,7 @@ public class ResourcePackHandler implements Listener {
                 break;
 
             case SUCCESSFULLY_LOADED:
-                player.sendMessage(ChatColor.GREEN + "Custom textures loaded successfully!");
+                //player.sendMessage(ChatColor.GREEN + "Custom textures loaded successfully!");
                 break;
 
             case ACCEPTED:

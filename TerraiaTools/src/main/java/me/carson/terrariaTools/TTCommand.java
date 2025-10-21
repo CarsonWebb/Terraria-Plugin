@@ -2,6 +2,7 @@ package me.carson.terrariaTools;
 
 import me.carson.terrariaTools.TerrariaTools;
 import me.carson.terrariaTools.accesories.Aglet;
+import me.carson.terrariaTools.accesories.ObsidianSkull;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -60,6 +61,9 @@ public class TTCommand implements CommandExecutor, TabCompleter {
                     case "aglet"-> {
                         player.getInventory().addItem(Aglet.getItem(plugin));
                     }
+                    case "obsidian_skull"-> {
+                        player.getInventory().addItem(ObsidianSkull.getItem(plugin));
+                    }
                     default -> player.sendMessage("§cUnknown item: " + itemName);
                 }
             }
@@ -78,7 +82,7 @@ public class TTCommand implements CommandExecutor, TabCompleter {
             StringUtil.copyPartialMatches(args[0], subCommands, completions);
         } else if (args.length == 2 && args[0].equalsIgnoreCase("give")) {
             // Second argument: item names
-            List<String> items = Arrays.asList("Cosmolight","Rod_of_Discord","Momentum_Capacitor","Stormbow","cloud_bottle","aglet");
+            List<String> items = Arrays.asList("Cosmolight","Rod_of_Discord","Momentum_Capacitor","Stormbow","Cloud_bottle","Aglet","Obsidian_Skull");
             StringUtil.copyPartialMatches(args[1], items, completions);
         }
 
