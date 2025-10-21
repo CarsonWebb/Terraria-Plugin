@@ -22,6 +22,8 @@ public class AccessoryManager implements Listener {
     public AccessoryManager(Plugin plugin) {
         items.add(new Aglet(plugin));
         items.add(new ObsidianSkull(plugin));
+        items.add(new RedBalloon(plugin));
+        items.add(new BandOfRegeneration(plugin));
         //items.add(new CloudInBottle(plugin));
     }
 

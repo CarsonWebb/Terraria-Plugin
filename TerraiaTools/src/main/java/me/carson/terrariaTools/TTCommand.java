@@ -2,7 +2,9 @@ package me.carson.terrariaTools;
 
 import me.carson.terrariaTools.TerrariaTools;
 import me.carson.terrariaTools.accesories.Aglet;
+import me.carson.terrariaTools.accesories.BandOfRegeneration;
 import me.carson.terrariaTools.accesories.ObsidianSkull;
+import me.carson.terrariaTools.accesories.RedBalloon;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -64,6 +66,12 @@ public class TTCommand implements CommandExecutor, TabCompleter {
                     case "obsidian_skull"-> {
                         player.getInventory().addItem(ObsidianSkull.getItem(plugin));
                     }
+                    case "band_of_regeneration"-> {
+                        player.getInventory().addItem(BandOfRegeneration.getItem(plugin));
+                    }
+                    case "red_balloon"-> {
+                        player.getInventory().addItem(RedBalloon.getItem(plugin));
+                    }
                     default -> player.sendMessage("§cUnknown item: " + itemName);
                 }
             }
@@ -82,7 +90,7 @@ public class TTCommand implements CommandExecutor, TabCompleter {
             StringUtil.copyPartialMatches(args[0], subCommands, completions);
         } else if (args.length == 2 && args[0].equalsIgnoreCase("give")) {
             // Second argument: item names
-            List<String> items = Arrays.asList("Cosmolight","Rod_of_Discord","Momentum_Capacitor","Stormbow","Cloud_bottle","Aglet","Obsidian_Skull");
+            List<String> items = Arrays.asList("Cosmolight","Rod_of_Discord","Momentum_Capacitor","Stormbow","Cloud_bottle","Aglet","Obsidian_Skull","red_balloon","band_of_regeneration");
             StringUtil.copyPartialMatches(args[1], items, completions);
         }
 
