@@ -1,5 +1,6 @@
 package me.carson.terrariaTools;
 
+import me.carson.terrariaTools.accesories.AccessoryManager;
 import me.carson.terrariaTools.accesories.Aglet;
 import me.carson.terrariaTools.accesories.CloudInBottle;
 import me.carson.terrariaTools.tools.Cosmolight;
@@ -25,10 +26,9 @@ public final class TerrariaTools extends JavaPlugin {
         rodOfDiscord=new RodOfDiscord(this);
         momentumCapacitor=new MomentumCapacitor(this);
         stormbow=new Stormbow(this);
-        aglet=new Aglet(this);
-        aglet.startAgletTask(this);
-        //cloudInBottle=new CloudInBottle(this);
-
+        AccessoryManager manager = new AccessoryManager(this);
+        manager.startAccessoryTask(this);
+        getServer().getPluginManager().registerEvents(manager, this);
         getServer().getPluginManager().registerEvents(new ResourcePackHandler(), this);
         TTCommand ttCommand = new TTCommand(this);
         new CraftBlockerListener(this);

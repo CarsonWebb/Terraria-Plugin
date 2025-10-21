@@ -1,26 +1,17 @@
 package me.carson.terrariaTools.accesories;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
 
 
-public class Aglet implements Listener {
+public class Aglet extends Accessory implements Listener  {
 
+    /*
     private final NamespacedKey key;
     private final NamespacedKey uncraftableKey;
 
@@ -41,8 +32,18 @@ public class Aglet implements Listener {
         meta.setMaxStackSize(Integer.valueOf(1));
         aglet.setItemMeta(meta);
         return aglet;
+    }*/
+
+    public Aglet(Plugin plugin){
+        super(plugin,"Aglet","#9696FF",Material.COPPER_INGOT,"aglet","Aglet",new NamespacedKey(plugin, "uncraftable"));
     }
 
+    @Override
+    public void activateEffect(Player player){
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, true, false));
+    }
+
+ /*
     public boolean isCustomAglet(ItemStack item){
         ItemMeta meta = item.getItemMeta();
         PersistentDataContainer data = meta.getPersistentDataContainer();
@@ -64,7 +65,7 @@ public class Aglet implements Listener {
 
                     if (hasAglet) {
                         // Give speed effect
-                        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, true, false));
+                        player.addPotion`Effect(new PotionEffect(PotionEffectType.SPEED, 60, 0, true, false));
                         // Duration 40 ticks = 2 seconds, refreshed every tick
                     } else {
                         // Remove speed if they don't have it
@@ -75,6 +76,6 @@ public class Aglet implements Listener {
                 }
             }
         }.runTaskTimer(plugin, 0L, 40L); // Runs every two seconds
-    }
+    }*/
 
 }
