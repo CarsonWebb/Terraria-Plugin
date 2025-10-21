@@ -3,6 +3,7 @@ package me.carson.terrariaTools.accesories;
 
 import me.carson.terrariaTools.tools.MomentumCapacitor;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -24,10 +25,9 @@ public class AccessoryManager implements Listener {
     }
 
     public void startAccessoryTask(Plugin plugin) {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
+        Bukkit.getScheduler().runTaskTimer(plugin, () -> {
                 for (Player player : Bukkit.getOnlinePlayers()) {
+                    player.sendMessage("Checking Player");
                     for (ItemStack item : player.getInventory().getContents()) {
                         if (item != null) {
                             for (Accessory itemx : items) {
@@ -38,7 +38,6 @@ public class AccessoryManager implements Listener {
                         }
                     }
                 }
-            }
-        }.runTaskTimer(plugin, 0L, 40L); // Runs every two seconds
+                }, 0L, 40L); // Runs every two seconds
     }
 }
