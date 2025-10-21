@@ -38,6 +38,6 @@ public class AccessoryManager implements Listener {
                         }
                     }
                 }
-                }, 0L, 40L); // Runs every two seconds
+                }, 0L, 100L); // Runs every five seconds
     }
 }

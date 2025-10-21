@@ -26,10 +26,16 @@ public final class TerrariaTools extends JavaPlugin {
         rodOfDiscord=new RodOfDiscord(this);
         momentumCapacitor=new MomentumCapacitor(this);
         stormbow=new Stormbow(this);
+
         AccessoryManager manager = new AccessoryManager(this);
         manager.startAccessoryTask(this);
+
+        RecipeManager recipeManager = new RecipeManager(this);
+        recipeManager.registerRecipes();
+
         getServer().getPluginManager().registerEvents(manager, this);
         getServer().getPluginManager().registerEvents(new ResourcePackHandler(), this);
+
         TTCommand ttCommand = new TTCommand(this);
         new CraftBlockerListener(this);
 

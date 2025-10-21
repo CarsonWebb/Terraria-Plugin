@@ -41,7 +41,7 @@ public class Aglet extends Accessory implements Listener  {
 
     @Override
     public void activateEffect(Player player){
-        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, true, false));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 120, 0, true, false));
     }
 
     public static ItemStack getItem(Plugin plugin) {
