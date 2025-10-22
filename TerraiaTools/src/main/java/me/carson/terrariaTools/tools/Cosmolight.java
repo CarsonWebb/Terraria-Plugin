@@ -22,6 +22,11 @@ public class Cosmolight extends Tool implements Listener{
 
     }
 
+    @Override
+    public void cooldownEffect(Player player) {
+        //N/A
+    }
+
     public void nextTime(World world){
         long time = world.getTime();
         if ((0<=time)&&(time<6000)){

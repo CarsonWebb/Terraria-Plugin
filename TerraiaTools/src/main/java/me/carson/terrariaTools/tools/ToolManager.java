@@ -1,15 +1,13 @@
 package me.carson.terrariaTools.tools;
 
 import me.carson.terrariaTools.accesories.*;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataType;
+
 import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
@@ -35,8 +33,12 @@ public class ToolManager implements Listener {
         for (Tool item : toolItems) {
             if (item.isThisItem(heldItem)) {
                 event.setCancelled(true);
-                item.rightActivate(player);
-                player.setCooldown(heldItem.getType(), item.cooldown);
+                if(!player.hasCooldown(heldItem.getType())){
+                    item.rightActivate(player);
+                    player.setCooldown(heldItem.getType(), item.cooldown);
+                }else{
+                    item.cooldownEffect(player);
+                }
             }
         }
     }

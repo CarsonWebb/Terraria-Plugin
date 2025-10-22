@@ -63,4 +63,6 @@ public abstract class Tool {
 
     public abstract void rightActivate(Player player);
 
+    public abstract void cooldownEffect(Player player);
+
 }

@@ -27,6 +27,11 @@ public class MomentumCapacitor extends Tool implements Listener {
         player.getWorld().spawnParticle(org.bukkit.Particle.CLOUD, player.getLocation(), 20, 0.2, 0.2, 0.2, 0.05);
     }
 
+    @Override
+    public void cooldownEffect(Player player) {
+        //N/A
+    }
+
     public static ItemStack getItem(Plugin plugin) {
         return new MomentumCapacitor(plugin).createItem();
     }

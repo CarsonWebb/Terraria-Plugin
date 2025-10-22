@@ -52,6 +52,11 @@ public class RodOfDiscord extends Tool implements Listener {
         player.spawnParticle(Particle.PORTAL, target, 50, 0.5, 0.5, 0.5, 0.1);
     }
 
+    @Override
+    public void cooldownEffect(Player player){
+        player.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_DAMAGE,1,0,false,false,false));
+    }
+
     public static ItemStack getItem(Plugin plugin) {
         return new RodOfDiscord(plugin).createItem();
     }
