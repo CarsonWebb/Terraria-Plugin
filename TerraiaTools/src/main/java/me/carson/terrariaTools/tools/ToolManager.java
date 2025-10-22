@@ -31,12 +31,9 @@ public class ToolManager implements Listener {
         if (event.getItem() == null) return;
         if (!heldItem.hasItemMeta()) return;
         Player player = event.getPlayer();
-        ItemMeta meta = heldItem.getItemMeta();
 
-        NamespacedKey key = new NamespacedKey((Plugin) this, "custom_item_id");
-        String storedId = meta.getPersistentDataContainer().get(key, PersistentDataType.STRING);
         for (Tool item : toolItems) {
-            if (item.id.equals(storedId)) {
+            if (item.isThisItem(heldItem)) {
                 event.setCancelled(true);
                 item.rightActivate(player);
                 player.setCooldown(heldItem.getType(), item.cooldown);
