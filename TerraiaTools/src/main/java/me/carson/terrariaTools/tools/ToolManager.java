@@ -14,9 +14,9 @@ public class ToolManager implements Listener {
     private final List<Tool> items = new ArrayList<>();
 
     public ToolManager(Plugin plugin) {
-        items.add(new Cosmolight(plugin));
-        items.add(new MomentumCapacitor(plugin));
-        items.add(new RodOfDiscord(plugin));
+        //items.add(new Cosmolight(plugin));
+        //items.add(new MomentumCapacitor(plugin));
+        //items.add(new RodOfDiscord(plugin));
     }
 
 }
