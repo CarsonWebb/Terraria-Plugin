@@ -15,8 +15,11 @@ public class Cosmolight extends Tool implements Listener{
 
     @Override
     public void rightActivate(Player player){
-        nextTime(player.getWorld());
-        player.playSound(player.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_RESONATE, 1.5f, 1.5f);
+        if(!player.hasCooldown(Material.CLOCK)){
+            nextTime(player.getWorld());
+            player.playSound(player.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_RESONATE, 1.5f, 1.5f);
+        }
+
     }
 
     public void nextTime(World world){

@@ -14,7 +14,7 @@ import org.bukkit.util.Vector;
 public class RodOfDiscord extends Tool implements Listener {
 
     public RodOfDiscord(Plugin plugin){
-        super(plugin,"Rod Of Discord","#96FF0A",Material.BLAZE_ROD,"rod_of_discord","RodOfDiscord",20);
+        super(plugin,"Rod Of Discord","#96FF0A",Material.BLAZE_ROD,"rod_of_discord","RodOfDiscord",120);
     }
 
     @Override

@@ -11,7 +11,7 @@ import org.bukkit.*;
 public class MomentumCapacitor extends Tool implements Listener {
 
     public MomentumCapacitor(Plugin plugin){
-        super(plugin,"Momentum Capacitor","#FF96FF",Material.HEAVY_CORE,"momentum_capacitor","MomentumCapacitor",20);
+        super(plugin,"Momentum Capacitor","#FF96FF",Material.HEAVY_CORE,"momentum_capacitor","MomentumCapacitor",0);
     }
 
     @Override
