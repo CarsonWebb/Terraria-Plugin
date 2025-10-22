@@ -1,7 +1,6 @@
 package me.carson.terrariaTools;
 
 import me.carson.terrariaTools.accesories.AccessoryManager;
-import me.carson.terrariaTools.accesories.Aglet;
 import me.carson.terrariaTools.accesories.CloudInBottle;
 import me.carson.terrariaTools.tools.Cosmolight;
 import me.carson.terrariaTools.tools.MomentumCapacitor;
@@ -18,7 +17,6 @@ public final class TerrariaTools extends JavaPlugin {
     MomentumCapacitor momentumCapacitor;
     Stormbow stormbow;
     CloudInBottle cloudInBottle;
-    Aglet aglet;
 
     @Override
     public void onEnable() {
@@ -38,6 +36,7 @@ public final class TerrariaTools extends JavaPlugin {
 
         TTCommand ttCommand = new TTCommand(this);
         new CraftBlockerListener(this);
+        getServer().getPluginManager().registerEvents(new ItemPlaceListener(this), this);
 
         Objects.requireNonNull(getCommand("tt")).setExecutor(ttCommand);
         Objects.requireNonNull(getCommand("tt")).setTabCompleter(ttCommand);
