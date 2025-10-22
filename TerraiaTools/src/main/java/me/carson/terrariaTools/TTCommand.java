@@ -1,16 +1,19 @@
 package me.carson.terrariaTools;
 
-import me.carson.terrariaTools.TerrariaTools;
 import me.carson.terrariaTools.accesories.Aglet;
 import me.carson.terrariaTools.accesories.BandOfRegeneration;
 import me.carson.terrariaTools.accesories.ObsidianSkull;
 import me.carson.terrariaTools.accesories.RedBalloon;
+import me.carson.terrariaTools.tools.Cosmolight;
+import me.carson.terrariaTools.tools.MomentumCapacitor;
+import me.carson.terrariaTools.tools.RodOfDiscord;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,7 +28,7 @@ public class TTCommand implements CommandExecutor, TabCompleter {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (!(sender instanceof Player player)) {
             sender.sendMessage("Only players can use this command.");
             return true;
@@ -46,19 +49,19 @@ public class TTCommand implements CommandExecutor, TabCompleter {
                 String itemName = args[1].toLowerCase();
                 switch (itemName) {
                     case "cosmolight"-> {
-                        player.getInventory().addItem(plugin.cosmolight.createItem());
+                        player.getInventory().addItem(Cosmolight.getItem(plugin));
                     }
                     case "rod_of_discord"-> {
-                        player.getInventory().addItem(plugin.rodOfDiscord.createItem());
+                        player.getInventory().addItem(RodOfDiscord.getItem(plugin));
                     }
                     case "momentum_capacitor"-> {
-                        player.getInventory().addItem(plugin.momentumCapacitor.createItem());
+                        player.getInventory().addItem(MomentumCapacitor.getItem(plugin));
                     }
                     case "stormbow"-> {
                         player.getInventory().addItem(plugin.stormbow.createItem());
                     }
                     case "cloud_bottle"-> {
-                        player.getInventory().addItem(plugin.cloudInBottle.createItem());
+                        //player.getInventory().addItem(Aglet.getItem(plugin));
                     }
                     case "aglet"-> {
                         player.getInventory().addItem(Aglet.getItem(plugin));

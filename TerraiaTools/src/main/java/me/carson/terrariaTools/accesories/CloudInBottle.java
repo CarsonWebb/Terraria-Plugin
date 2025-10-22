@@ -104,7 +104,6 @@ public class CloudInBottle implements Listener {
     public void onPlayerToggleFlight(PlayerToggleFlightEvent event) {
         Player player = event.getPlayer();
         player.sendMessage("Detected Double Jump");
-        // Prevent actual flight
         event.setCancelled(true);
         player.setAllowFlight(false);
         player.setFlying(false);
