@@ -1,19 +1,16 @@
-package me.carson.terrariaTools.accesories;
+package me.carson.terrariaTools.tools;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 
-public abstract class Accessory {
+public abstract class Tool {
 
     protected final Plugin plugin;
     protected final String name;
@@ -24,7 +21,7 @@ public abstract class Accessory {
     protected final NamespacedKey uncraftableKey;
 
 
-    public Accessory(Plugin plugin, String name, String rarity, Material baseMaterial, String texture, String id, NamespacedKey uncraftableKey){
+    public Tool(Plugin plugin, String name, String rarity, Material baseMaterial, String texture, String id, NamespacedKey uncraftableKey) {
         this.plugin = plugin;
         this.name = name;
         this.rarity = rarity;
@@ -42,7 +39,7 @@ public abstract class Accessory {
         NamespacedKey key = new NamespacedKey(plugin, "custom_item_id");
         meta.getPersistentDataContainer().set(key, PersistentDataType.STRING, id);
         meta.getPersistentDataContainer().set(uncraftableKey, PersistentDataType.BYTE, (byte) 1);
-        meta.setItemModel(new NamespacedKey("terraria",texture));
+        meta.setItemModel(new NamespacedKey("terraria", texture));
         meta.setMaxStackSize(Integer.valueOf(1));
         aglet.setItemMeta(meta);
         return aglet;
@@ -58,13 +55,6 @@ public abstract class Accessory {
         return id.equals(storedId);
     }
 
-    @EventHandler
-    public void onBlockPlace(BlockPlaceEvent event) {
-        ItemStack item = event.getItemInHand();
-        if (isThisItem(item)) {
-            event.setCancelled(true);
-        }
-    }
+    public void onRightClick(org.bukkit.event.player.PlayerInteractEvent event) {}
 
-    public abstract void activateEffect(Player player);
 }

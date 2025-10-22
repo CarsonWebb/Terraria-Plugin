@@ -81,7 +81,6 @@ public class MomentumCapacitor implements Listener {
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
         ItemStack item = event.getItemInHand();
-        // If it's your custom item, cancel placement
         if (isMomentumCapacitor(item)) {
             event.setCancelled(true);
         }
