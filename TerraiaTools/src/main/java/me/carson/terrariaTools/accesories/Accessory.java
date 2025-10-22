@@ -21,17 +21,19 @@ public abstract class Accessory {
     protected final Material baseMaterial;
     protected final String texture;
     protected final String id;
-    protected final NamespacedKey uncraftableKey;
+    private final NamespacedKey uncraftableKey;
+    private final NamespacedKey unplaceableKey;
 
 
-    public Accessory(Plugin plugin, String name, String rarity, Material baseMaterial, String texture, String id, NamespacedKey uncraftableKey){
+    public Accessory(Plugin plugin, String name, String rarity, Material baseMaterial, String texture, String id){
         this.plugin = plugin;
         this.name = name;
         this.rarity = rarity;
         this.baseMaterial = baseMaterial;
         this.texture = texture;
         this.id = id;
-        this.uncraftableKey = uncraftableKey;
+        uncraftableKey=new NamespacedKey(plugin, "uncraftable");
+        unplaceableKey=new NamespacedKey(plugin, "unplaceable");
     }
 
     public ItemStack createItem() {
@@ -41,8 +43,9 @@ public abstract class Accessory {
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         NamespacedKey key = new NamespacedKey(plugin, "custom_item_id");
         meta.getPersistentDataContainer().set(key, PersistentDataType.STRING, id);
-        meta.getPersistentDataContainer().set(uncraftableKey, PersistentDataType.BYTE, (byte) 1);
         meta.setItemModel(new NamespacedKey("terraria",texture));
+        meta.getPersistentDataContainer().set(uncraftableKey, PersistentDataType.BYTE, (byte) 1);
+        meta.getPersistentDataContainer().set(unplaceableKey, PersistentDataType.BYTE, (byte) 1);
         meta.setMaxStackSize(Integer.valueOf(1));
         aglet.setItemMeta(meta);
         return aglet;
@@ -56,14 +59,6 @@ public abstract class Accessory {
         NamespacedKey key = new NamespacedKey(plugin, "custom_item_id");
         String storedId = meta.getPersistentDataContainer().get(key, PersistentDataType.STRING);
         return id.equals(storedId);
-    }
-
-    @EventHandler
-    public void onBlockPlace(BlockPlaceEvent event) {
-        ItemStack item = event.getItemInHand();
-        if (isThisItem(item)) {
-            event.setCancelled(true);
-        }
     }
 
     public abstract void activateEffect(Player player);

@@ -12,7 +12,7 @@ import org.bukkit.potion.PotionEffectType;
 public class BandOfRegeneration extends Accessory implements Listener {
 
     public BandOfRegeneration(Plugin plugin){
-        super(plugin,"Band of Regeneration","#9696FF", Material.REDSTONE_BLOCK,"band_of_regeneration","Band",new NamespacedKey(plugin, "uncraftable"));
+        super(plugin,"Band of Regeneration","#9696FF", Material.REDSTONE_BLOCK,"band_of_regeneration","Band");
     }
 
     @Override
