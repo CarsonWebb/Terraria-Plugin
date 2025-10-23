@@ -1,9 +1,6 @@
 package me.carson.terrariaTools;
 
-import me.carson.terrariaTools.accesories.Aglet;
-import me.carson.terrariaTools.accesories.BandOfRegeneration;
-import me.carson.terrariaTools.accesories.ObsidianSkull;
-import me.carson.terrariaTools.accesories.RedBalloon;
+import me.carson.terrariaTools.accesories.*;
 import me.carson.terrariaTools.tools.Cosmolight;
 import me.carson.terrariaTools.tools.MomentumCapacitor;
 import me.carson.terrariaTools.tools.RodOfDiscord;
@@ -61,7 +58,7 @@ public class TTCommand implements CommandExecutor, TabCompleter {
                         player.getInventory().addItem(plugin.stormbow.createItem());
                     }
                     case "cloud_bottle"-> {
-                        //player.getInventory().addItem(Aglet.getItem(plugin));
+                        player.getInventory().addItem(CloudInBottle.getItem(plugin));
                     }
                     case "aglet"-> {
                         player.getInventory().addItem(Aglet.getItem(plugin));
