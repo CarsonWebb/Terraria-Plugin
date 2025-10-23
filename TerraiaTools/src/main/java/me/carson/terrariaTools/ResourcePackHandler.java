@@ -18,7 +18,7 @@ public class ResourcePackHandler implements Listener {
 
         // Send the resource pack when the player joins
         //player.sendMessage(ChatColor.YELLOW + "Downloading custom textures...");
-        //player.setResourcePack(PACK_URL);
+        player.setResourcePack(PACK_URL);
     }
 
     @EventHandler
