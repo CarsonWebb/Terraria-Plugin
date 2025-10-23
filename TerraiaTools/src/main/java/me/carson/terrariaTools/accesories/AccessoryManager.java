@@ -66,16 +66,20 @@ public class AccessoryManager implements Listener {
     public void onRightClick(PlayerInteractEvent event) {
         if (!(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK)) return;
         Player player = event.getPlayer();
+        player.sendMessage("Right Clicked");
         if(!player.isSneaking())return;
+        player.sendMessage("Sneaked");
         ItemStack heldItem= event.getItem();
         if (heldItem == null) return;
         if (!heldItem.hasItemMeta()) return;
         for (Accessory item : accessoryItems) {
             if (item.isThisItem(heldItem)) {
                 if(!item.activated&&checkAmountActivated(player)){
+                    player.sendMessage("Activated");
                     item.activated=true;
                     heldItem.getItemMeta().setEnchantmentGlintOverride(true);
                 }else{
+                    player.sendMessage("Deactivated");
                     item.activated=false;
                     heldItem.getItemMeta().setEnchantmentGlintOverride(false);
                 }
@@ -84,12 +88,14 @@ public class AccessoryManager implements Listener {
     }
 
     public boolean checkAmountActivated(Player player){
+        player.sendMessage("Checking Amount");
         int counter=0;
         for (ItemStack itemInv : player.getInventory().getContents()) {
             if (itemInv != null) {
                 for (Accessory itemTool : accessoryItems) {
                     if (itemTool.isThisItem(itemInv)&& itemTool.activated) {
                         counter++;
+                        player.sendMessage("Counter:"+ counter);
                     }
                 }
             }
