@@ -40,8 +40,8 @@ public abstract class Accessory {
     }
 
     public ItemStack createItem() {
-        ItemStack aglet = new ItemStack(baseMaterial);
-        ItemMeta meta = aglet.getItemMeta();
+        ItemStack item = new ItemStack(baseMaterial);
+        ItemMeta meta = item.getItemMeta();
         meta.displayName(Component.text(name, TextColor.fromHexString(rarity)));
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         NamespacedKey key = new NamespacedKey(plugin, "custom_item_id");
@@ -51,8 +51,8 @@ public abstract class Accessory {
         meta.getPersistentDataContainer().set(unplaceableKey, PersistentDataType.BYTE, (byte) 1);
         meta.getPersistentDataContainer().set(activeKey, PersistentDataType.INTEGER, 0);
         meta.setMaxStackSize(Integer.valueOf(1));
-        aglet.setItemMeta(meta);
-        return aglet;
+        item.setItemMeta(meta);
+        return item;
     }
 
     public boolean isThisItem(ItemStack item) {
