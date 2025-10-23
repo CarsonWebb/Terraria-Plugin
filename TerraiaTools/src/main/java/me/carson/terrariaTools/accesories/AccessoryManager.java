@@ -12,10 +12,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class AccessoryManager implements Listener {
     private final List<Accessory> accessoryItems = new ArrayList<>();
+    private final HashMap<UUID, Long> lastClickTime = new HashMap<>();
 
     public AccessoryManager(Plugin plugin) {
         //Adds items to manager
@@ -66,12 +69,22 @@ public class AccessoryManager implements Listener {
     public void onRightClick(PlayerInteractEvent event) {
         if (!(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK)) return;
         Player player = event.getPlayer();
+
+        //handles rapid clicks
+        long currentTime = System.currentTimeMillis();
+        long lastTime = lastClickTime.getOrDefault(player.getUniqueId(), 0L);
+        // Set a cooldown (e.g. 300 ms)
+        if (currentTime - lastTime < 500) {
+            return; // Ignore repeated right-clicks
+        }
+        lastClickTime.put(player.getUniqueId(), currentTime);
+
+
         if(!player.isSneaking())return;
         ItemStack heldItem= event.getItem();
         if (heldItem == null) return;
         if (!heldItem.hasItemMeta()) return;
         for (Accessory item : accessoryItems) {
-            player.sendMessage(""+item.isThisItem(heldItem));
             if (item.isThisItem(heldItem)) {
                 if(!item.isActivated(heldItem)&&checkAmountActivated(player)){
                     item.setActivated(heldItem,true);
