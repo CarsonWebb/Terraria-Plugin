@@ -19,6 +19,11 @@ public class ObsidianSkull extends Accessory implements Listener {
         player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 120, 0, true, false));
     }
 
+    @Override
+    public void deactivateEffect(Player player) {
+        player.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
+    }
+
     public static ItemStack getItem(Plugin plugin) {
         return new ObsidianSkull(plugin).createItem();
     }

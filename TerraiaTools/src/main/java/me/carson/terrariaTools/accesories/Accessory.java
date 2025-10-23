@@ -62,4 +62,6 @@ public abstract class Accessory {
     }
 
     public abstract void activateEffect(Player player);
+
+    public abstract void deactivateEffect(Player player);
 }

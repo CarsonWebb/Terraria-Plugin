@@ -1,12 +1,8 @@
 package me.carson.terrariaTools.accesories;
 
 import com.destroystokyo.paper.event.player.PlayerJumpEvent;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
-import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,36 +10,15 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.Vector;
+import org.bukkit.plugin.Plugin;
 
-public class CloudInBottle implements Listener {
+public class CloudInBottle extends Accessory implements Listener {
 
-    private final NamespacedKey key;
-    private final NamespacedKey uncraftableKey;
+    private boolean active;
 
-    public CloudInBottle(JavaPlugin plugin) {
-        this.key = new NamespacedKey(plugin, "cloud");
-        this.uncraftableKey = new NamespacedKey(plugin, "uncraftable");
-        plugin.getServer().getPluginManager().registerEvents(this, plugin);
-    }
-
-    public ItemStack createItem() {
-        ItemStack cloud = new ItemStack(Material.GLASS_BOTTLE);
-        ItemMeta meta = cloud.getItemMeta();
-        meta.displayName(Component.text("Cloud in a Bottle", TextColor.fromHexString("#9696FF")));
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        meta.getPersistentDataContainer().set(key, PersistentDataType.BYTE, (byte) 1);
-        meta.getPersistentDataContainer().set(uncraftableKey, PersistentDataType.BYTE, (byte) 1);
-        meta.setItemModel(new NamespacedKey("terraria","cloud_in_a_bottle"));
-        meta.setMaxStackSize(Integer.valueOf(1));
-        cloud.setItemMeta(meta);
-        return cloud;
+    public CloudInBottle(Plugin plugin){
+        super(plugin,"Cloud in a Bottle","#9696FF",Material.GLASS_BOTTLE,"cloud_in_a_bottle","CloudInBottle");
     }
 
     @EventHandler
@@ -59,68 +34,54 @@ public class CloudInBottle implements Listener {
         }
     }
 
+    @Override
+    public void activateEffect(Player player) {
+        active=true;
+    }
+
+    @Override
+    public void deactivateEffect(Player player) {
+        active=false;
+    }
+
     @EventHandler
-    public void onShiftRightClick(PlayerInteractEvent event){
-        if (event.getItem() == null) return;
-        if (!(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK)) return;
-
-        Player player = event.getPlayer();
-        if(!player.isSneaking()) return;
-
-        ItemStack item = event.getItem();
-        if (item == null || !item.hasItemMeta()) return;
-        ItemMeta meta = item.getItemMeta();
-        PersistentDataContainer data = meta.getPersistentDataContainer();
-        if (!data.has(key, PersistentDataType.BYTE)) return;
-
-        if(!meta.hasEnchantmentGlintOverride()){
-            meta.setEnchantmentGlintOverride(true);
-            item.setItemMeta(meta);
-        }else{
-            meta.setEnchantmentGlintOverride(false);
-            item.setItemMeta(meta);
+    public void onPlayerJump(PlayerJumpEvent event){
+        if(active){
+            event.getPlayer().setAllowFlight(true);
         }
     }
 
     @EventHandler
-    public void onJump(PlayerJumpEvent event){
+    public void onToggleFlight(PlayerToggleFlightEvent event) {
         Player player = event.getPlayer();
-        player.setAllowFlight(true);
-    }
 
-    private boolean hasBottle(Player player) {
-        for (ItemStack item : player.getInventory().getContents()) {
-            if (item == null || !item.hasItemMeta()) continue;
-            ItemMeta meta = item.getItemMeta();
-            if(meta.hasEnchantmentGlintOverride()&&(meta.getDisplayName().equals("Cloud in a Bottle"))){
-                player.sendMessage("Has Bottle");
-                return true;
-            }
-        }
-        return false;
-    }
+        // Only apply to survival or adventure mode
+        if (player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR)
+            return;
 
-    @EventHandler
-    public void onPlayerToggleFlight(PlayerToggleFlightEvent event) {
-        Player player = event.getPlayer();
-        player.sendMessage("Detected Double Jump");
+        // Prevent normal flight behavior
         event.setCancelled(true);
+        if(player.getAllowFlight()){
+            player.setVelocity(player.getLocation().getDirection().multiply(1.0).setY(1.0));
+            player.getWorld().playSound(player.getLocation(), "minecraft:entity.firework_rocket.launch", 1f, 1.5f);
+        }
+
+        // Perform the "double jump"
         player.setAllowFlight(false);
         player.setFlying(false);
-        if(hasBottle(player)){
-            player.setVelocity(player.getVelocity().add(new Vector(0,1,0)));
-            player.getWorld().playSound(player.getLocation(), "minecraft:entity.breeze.wind_burst", 1f, 1f);
-            player.getWorld().spawnParticle(org.bukkit.Particle.CLOUD, player.getLocation(), 20, 0.2, 0.2, 0.2, 0.05);
-        }
     }
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
-        if (player.isOnGround()) {
-            player.setAllowFlight(false);
-            player.setFlying(false);
+        if (player.isOnGround()){
+            event.getPlayer().setAllowFlight(false);
         }
     }
 
+
+
+    public static ItemStack getItem(Plugin plugin) {
+        return new CloudInBottle(plugin).createItem();
+    }
 }

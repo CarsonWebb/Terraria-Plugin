@@ -26,7 +26,7 @@ public class ToolManager implements Listener {
     public void onRightClick(PlayerInteractEvent event) {
         if (!(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK)) return;
         ItemStack heldItem= event.getItem();
-        if (event.getItem() == null) return;
+        if (heldItem == null) return;
         if (!heldItem.hasItemMeta()) return;
         Player player = event.getPlayer();
 

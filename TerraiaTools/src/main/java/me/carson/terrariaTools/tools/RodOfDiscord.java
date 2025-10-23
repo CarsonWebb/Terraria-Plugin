@@ -54,6 +54,7 @@ public class RodOfDiscord extends Tool implements Listener {
 
     @Override
     public void cooldownEffect(Player player){
+        rightActivate(player);
         player.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_DAMAGE,1,0,false,false,false));
     }
 

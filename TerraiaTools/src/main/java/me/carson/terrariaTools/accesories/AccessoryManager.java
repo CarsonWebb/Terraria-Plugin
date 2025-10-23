@@ -1,8 +1,11 @@
 package me.carson.terrariaTools.accesories;
 
+import me.carson.terrariaTools.tools.Tool;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
@@ -17,7 +20,7 @@ public class AccessoryManager implements Listener {
         accessoryItems.add(new ObsidianSkull(plugin));
         accessoryItems.add(new RedBalloon(plugin));
         accessoryItems.add(new BandOfRegeneration(plugin));
-        //items.add(new CloudInBottle(plugin));
+        accessoryItems.add(new CloudInBottle(plugin));
     }
 
     public void startAccessoryTask(Plugin plugin) {
@@ -34,5 +37,18 @@ public class AccessoryManager implements Listener {
                     }
                 }
                 }, 0L, 100L); // Runs every five seconds
+    }
+
+    @EventHandler
+    public void onItemDrop(PlayerDropItemEvent event) {
+        Player player = event.getPlayer();
+        ItemStack droppedItem= event.getItemDrop().getItemStack();
+        if (!droppedItem.hasItemMeta()) return;
+        for (Accessory item : accessoryItems) {
+            if (item.isThisItem(droppedItem)) {
+                item.deactivateEffect(player);
+            }
+        }
+
     }
 }

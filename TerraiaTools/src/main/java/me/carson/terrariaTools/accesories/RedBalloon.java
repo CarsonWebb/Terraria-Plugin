@@ -19,6 +19,11 @@ public class RedBalloon extends Accessory implements Listener {
         player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 120, 0, true, false));
     }
 
+    @Override
+    public void deactivateEffect(Player player) {
+        player.removePotionEffect(PotionEffectType.JUMP_BOOST);
+    }
+
     public static ItemStack getItem(Plugin plugin) {
         return new RedBalloon(plugin).createItem();
     }

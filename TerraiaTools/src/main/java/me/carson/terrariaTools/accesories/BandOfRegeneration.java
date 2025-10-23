@@ -20,6 +20,11 @@ public class BandOfRegeneration extends Accessory implements Listener {
         player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 120, 0, true, false));
     }
 
+    @Override
+    public void deactivateEffect(Player player) {
+        player.removePotionEffect(PotionEffectType.REGENERATION);
+    }
+
     public static ItemStack getItem(Plugin plugin) {
         return new BandOfRegeneration(plugin).createItem();
     }
