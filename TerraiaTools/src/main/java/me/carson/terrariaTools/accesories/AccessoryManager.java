@@ -71,6 +71,7 @@ public class AccessoryManager implements Listener {
         if (heldItem == null) return;
         if (!heldItem.hasItemMeta()) return;
         for (Accessory item : accessoryItems) {
+            player.sendMessage(""+item.isThisItem(heldItem));
             if (item.isThisItem(heldItem)) {
                 if(!item.isActivated(heldItem)&&checkAmountActivated(player)){
                     item.setActivated(heldItem,true);
