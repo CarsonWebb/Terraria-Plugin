@@ -36,14 +36,14 @@ public class CloudInBottle extends Accessory implements Listener {
 
     @Override
     public void activateEffect(Player player) {
-        active=true;
+
     }
 
     @Override
     public void deactivateEffect(Player player) {
-        active=false;
-    }
 
+    }
+    /*
     @EventHandler
     public void onPlayerJump(PlayerJumpEvent event){
         if(active){
@@ -77,7 +77,7 @@ public class CloudInBottle extends Accessory implements Listener {
         if (player.isOnGround()){
             event.getPlayer().setAllowFlight(false);
         }
-    }
+    }*/
 
 
 
