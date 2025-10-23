@@ -11,7 +11,7 @@ import org.bukkit.potion.PotionEffectType;
 public class RedBalloon extends Accessory implements Listener {
 
     public RedBalloon(Plugin plugin){
-        super(plugin,"Shiny Red Balloon","#9696FF", Material.RED_WOOL,"shiny_red_balloon","Balloon");
+        super(plugin,"Shiny Red Balloon","#9696FF", Material.RED_WOOL,"shiny_red_balloon","Balloon",false);
     }
 
     @Override

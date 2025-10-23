@@ -11,7 +11,7 @@ import org.bukkit.potion.PotionEffectType;
 public class ObsidianSkull extends Accessory implements Listener {
 
     public ObsidianSkull(Plugin plugin){
-        super(plugin,"Obsidian Skull","#96FF96", Material.OBSIDIAN,"obsidian_skull","Skull");
+        super(plugin,"Obsidian Skull","#96FF96", Material.OBSIDIAN,"obsidian_skull","Skull",false);
     }
 
     @Override

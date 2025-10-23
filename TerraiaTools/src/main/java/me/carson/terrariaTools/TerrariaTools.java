@@ -1,10 +1,7 @@
 package me.carson.terrariaTools;
 
 import me.carson.terrariaTools.accesories.AccessoryManager;
-import me.carson.terrariaTools.accesories.CloudInBottle;
-import me.carson.terrariaTools.tools.Cosmolight;
-import me.carson.terrariaTools.tools.MomentumCapacitor;
-import me.carson.terrariaTools.tools.RodOfDiscord;
+import me.carson.terrariaTools.recipieManagers.AccessoryRecipeManager;
 import me.carson.terrariaTools.tools.ToolManager;
 import me.carson.terrariaTools.weapons.Stormbow;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -24,8 +21,8 @@ public final class TerrariaTools extends JavaPlugin {
 
         ToolManager tManager=new ToolManager(this);
 
-        RecipeManager recipeManager = new RecipeManager(this);
-        recipeManager.registerRecipes();
+        AccessoryRecipeManager accessoryRecipeManager = new AccessoryRecipeManager(this);
+        accessoryRecipeManager.registerRecipes();
 
         getServer().getPluginManager().registerEvents(aManager, this);
         getServer().getPluginManager().registerEvents(tManager, this);

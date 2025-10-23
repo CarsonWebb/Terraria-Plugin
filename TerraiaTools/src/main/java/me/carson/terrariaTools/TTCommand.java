@@ -72,6 +72,9 @@ public class TTCommand implements CommandExecutor, TabCompleter {
                     case "red_balloon"-> {
                         player.getInventory().addItem(RedBalloon.getItem(plugin));
                     }
+                    case "lucky_horseshoe"-> {
+                        player.getInventory().addItem(LuckyHorseshoe.getItem(plugin));
+                    }
                     default -> player.sendMessage("§cUnknown item: " + itemName);
                 }
             }
@@ -90,7 +93,7 @@ public class TTCommand implements CommandExecutor, TabCompleter {
             StringUtil.copyPartialMatches(args[0], subCommands, completions);
         } else if (args.length == 2 && args[0].equalsIgnoreCase("give")) {
             // Second argument: item names
-            List<String> items = Arrays.asList("Cosmolight","Rod_of_Discord","Momentum_Capacitor","Stormbow","Cloud_bottle","Aglet","Obsidian_Skull","red_balloon","band_of_regeneration");
+            List<String> items = Arrays.asList("Cosmolight","Rod_of_Discord","Momentum_Capacitor","Stormbow","Cloud_bottle","Aglet","Obsidian_Skull","red_balloon","band_of_regeneration","lucky_horseshoe");
             StringUtil.copyPartialMatches(args[1], items, completions);
         }
 

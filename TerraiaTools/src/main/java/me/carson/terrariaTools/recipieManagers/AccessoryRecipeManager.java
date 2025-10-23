@@ -1,9 +1,6 @@
-package me.carson.terrariaTools;
+package me.carson.terrariaTools.recipieManagers;
 
-import me.carson.terrariaTools.accesories.Aglet;
-import me.carson.terrariaTools.accesories.BandOfRegeneration;
-import me.carson.terrariaTools.accesories.ObsidianSkull;
-import me.carson.terrariaTools.accesories.RedBalloon;
+import me.carson.terrariaTools.accesories.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -11,11 +8,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.Plugin;
 
-public class RecipeManager {
+public class AccessoryRecipeManager {
 
     private final Plugin plugin;
 
-    public RecipeManager(Plugin plugin) {
+    public AccessoryRecipeManager(Plugin plugin) {
         this.plugin = plugin;
     }
 
@@ -24,6 +21,7 @@ public class RecipeManager {
         registerObsidianSkullRecipe();
         registerBandOfRegenerationRecipe();
         registerRedBalloonRecipe();
+        registerHorseshoeRecipe();
     }
 
     private void registerAgletRecipe(){
@@ -60,6 +58,15 @@ public class RecipeManager {
         ShapedRecipe recipe = new ShapedRecipe(key, band);
         recipe.shape("RRR","R R","RRR");
         recipe.setIngredient('R', Material.REDSTONE_BLOCK);
+        Bukkit.addRecipe(recipe);
+    }
+
+    private void registerHorseshoeRecipe(){
+        ItemStack horseshoe=new LuckyHorseshoe(plugin).createItem();
+        NamespacedKey key = new NamespacedKey(plugin, "LuckyHorseshoe");
+        ShapedRecipe recipe = new ShapedRecipe(key, horseshoe);
+        recipe.shape("G G","G G","GGG");
+        recipe.setIngredient('G', Material.GOLD_BLOCK);
         Bukkit.addRecipe(recipe);
     }
 

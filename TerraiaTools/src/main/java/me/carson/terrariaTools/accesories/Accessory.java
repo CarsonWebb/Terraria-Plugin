@@ -21,11 +21,12 @@ public abstract class Accessory {
     protected final Material baseMaterial;
     protected final String texture;
     protected final String id;
+    protected boolean activated;
     private final NamespacedKey uncraftableKey;
     private final NamespacedKey unplaceableKey;
 
 
-    public Accessory(Plugin plugin, String name, String rarity, Material baseMaterial, String texture, String id){
+    public Accessory(Plugin plugin, String name, String rarity, Material baseMaterial, String texture, String id, boolean activated){
         this.plugin = plugin;
         this.name = name;
         this.rarity = rarity;
@@ -34,6 +35,7 @@ public abstract class Accessory {
         this.id = id;
         uncraftableKey=new NamespacedKey(plugin, "uncraftable");
         unplaceableKey=new NamespacedKey(plugin, "unplaceable");
+        this.activated = activated;
     }
 
     public ItemStack createItem() {

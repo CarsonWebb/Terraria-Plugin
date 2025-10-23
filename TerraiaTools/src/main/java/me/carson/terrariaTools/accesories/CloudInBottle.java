@@ -18,7 +18,7 @@ public class CloudInBottle extends Accessory implements Listener {
     private boolean active;
 
     public CloudInBottle(Plugin plugin){
-        super(plugin,"Cloud in a Bottle","#9696FF",Material.GLASS_BOTTLE,"cloud_in_a_bottle","CloudInBottle");
+        super(plugin,"Cloud in a Bottle","#9696FF",Material.GLASS_BOTTLE,"cloud_in_a_bottle","CloudInBottle",false);
     }
 
     @EventHandler
@@ -61,7 +61,7 @@ public class CloudInBottle extends Accessory implements Listener {
 
         // Prevent normal flight behavior
         event.setCancelled(true);
-        if(player.getAllowFlight()){
+        if(player.getAllowFlight()&&active){
             player.setVelocity(player.getLocation().getDirection().multiply(1.0).setY(1.0));
             player.getWorld().playSound(player.getLocation(), "minecraft:entity.firework_rocket.launch", 1f, 1.5f);
         }
