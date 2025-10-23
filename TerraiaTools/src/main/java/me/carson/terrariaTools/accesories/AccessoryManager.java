@@ -38,7 +38,7 @@ public class AccessoryManager implements Listener {
                     for (ItemStack itemInv : player.getInventory().getContents()) {
                         if (itemInv != null) {
                             for (Accessory itemTool : accessoryItems) {
-                                if (itemTool.isThisItem(itemInv)&& itemTool.activated) {
+                                if (itemTool.isThisItem(itemInv)&& itemTool.isActivated(itemInv)) {
                                     itemTool.activateEffect(player);
                                 }
                             }
@@ -56,7 +56,7 @@ public class AccessoryManager implements Listener {
         for (Accessory item : accessoryItems) {
             if (item.isThisItem(droppedItem)) {
                 item.deactivateEffect(player);
-                item.activated=false;
+                item.setActivated(droppedItem,false);
                 droppedItem.getItemMeta().setEnchantmentGlintOverride(false);
             }
         }
@@ -68,18 +68,15 @@ public class AccessoryManager implements Listener {
         Player player = event.getPlayer();
         if(!player.isSneaking())return;
         ItemStack heldItem= event.getItem();
-        player.sendMessage(heldItem.toString());
         if (heldItem == null) return;
-        player.sendMessage("Held item isnt null");
         if (!heldItem.hasItemMeta()) return;
-        player.sendMessage("Held item has meta");
         for (Accessory item : accessoryItems) {
             if (item.isThisItem(heldItem)) {
-                if(!item.activated&&checkAmountActivated(player)){
-                    item.activated=true;
+                if(!item.isActivated(heldItem)&&checkAmountActivated(player)){
+                    item.setActivated(heldItem,true);
                     heldItem.getItemMeta().setEnchantmentGlintOverride(true);
                 }else{
-                    item.activated=false;
+                    item.setActivated(heldItem,false);
                     heldItem.getItemMeta().setEnchantmentGlintOverride(false);
                 }
             }
@@ -91,7 +88,7 @@ public class AccessoryManager implements Listener {
         for (ItemStack itemInv : player.getInventory().getContents()) {
             if (itemInv != null) {
                 for (Accessory itemTool : accessoryItems) {
-                    if (itemTool.isThisItem(itemInv)&& itemTool.activated) {
+                    if (itemTool.isThisItem(itemInv)&& itemTool.isActivated(itemInv)) {
                         counter++;
                     }
                 }
@@ -99,5 +96,7 @@ public class AccessoryManager implements Listener {
         }
         return counter < 5;
     }
+
+
 
 }

@@ -12,7 +12,7 @@ import org.bukkit.potion.PotionEffectType;
 public class Aglet extends Accessory implements Listener  {
 
     public Aglet(Plugin plugin){
-        super(plugin,"Aglet","#9696FF",Material.COPPER_INGOT,"aglet","Aglet",false);
+        super(plugin,"Aglet","#9696FF",Material.COPPER_INGOT,"aglet","Aglet");
     }
 
     @Override

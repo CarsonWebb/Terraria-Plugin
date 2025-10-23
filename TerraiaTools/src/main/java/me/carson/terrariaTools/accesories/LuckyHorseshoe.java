@@ -11,7 +11,7 @@ import org.bukkit.plugin.Plugin;
 public class LuckyHorseshoe extends Accessory implements Listener  {
 
     public LuckyHorseshoe(Plugin plugin){
-        super(plugin,"Lucky Horseshoe","#9696FF",Material.GOLD_BLOCK,"lucky_horseshoe","LuckyHorseshoe",false);
+        super(plugin,"Lucky Horseshoe","#9696FF",Material.GOLD_BLOCK,"lucky_horseshoe","LuckyHorseshoe");
     }
 
     @Override

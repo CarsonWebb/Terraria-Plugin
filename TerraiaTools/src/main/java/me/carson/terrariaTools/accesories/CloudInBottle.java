@@ -18,7 +18,7 @@ public class CloudInBottle extends Accessory implements Listener {
     private boolean active;
 
     public CloudInBottle(Plugin plugin){
-        super(plugin,"Cloud in a Bottle","#9696FF",Material.GLASS_BOTTLE,"cloud_in_a_bottle","CloudInBottle",false);
+        super(plugin,"Cloud in a Bottle","#9696FF",Material.GLASS_BOTTLE,"cloud_in_a_bottle","CloudInBottle");
     }
 
     @EventHandler

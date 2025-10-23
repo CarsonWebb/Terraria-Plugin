@@ -10,6 +10,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 
@@ -21,12 +22,12 @@ public abstract class Accessory {
     protected final Material baseMaterial;
     protected final String texture;
     protected final String id;
-    protected boolean activated;
+    private final NamespacedKey activeKey;
     private final NamespacedKey uncraftableKey;
     private final NamespacedKey unplaceableKey;
 
 
-    public Accessory(Plugin plugin, String name, String rarity, Material baseMaterial, String texture, String id, boolean activated){
+    public Accessory(Plugin plugin, String name, String rarity, Material baseMaterial, String texture, String id){
         this.plugin = plugin;
         this.name = name;
         this.rarity = rarity;
@@ -35,7 +36,7 @@ public abstract class Accessory {
         this.id = id;
         uncraftableKey=new NamespacedKey(plugin, "uncraftable");
         unplaceableKey=new NamespacedKey(plugin, "unplaceable");
-        this.activated = activated;
+        activeKey = new NamespacedKey(plugin,"activekey");
     }
 
     public ItemStack createItem() {
@@ -48,6 +49,7 @@ public abstract class Accessory {
         meta.setItemModel(new NamespacedKey("terraria",texture));
         meta.getPersistentDataContainer().set(uncraftableKey, PersistentDataType.BYTE, (byte) 1);
         meta.getPersistentDataContainer().set(unplaceableKey, PersistentDataType.BYTE, (byte) 1);
+        meta.getPersistentDataContainer().set(activeKey, PersistentDataType.INTEGER, 0);
         meta.setMaxStackSize(Integer.valueOf(1));
         aglet.setItemMeta(meta);
         return aglet;
@@ -57,10 +59,30 @@ public abstract class Accessory {
         if (item == null || !item.hasItemMeta()) return false;
         ItemMeta meta = item.getItemMeta();
         if (meta == null) return false;
-
         NamespacedKey key = new NamespacedKey(plugin, "custom_item_id");
         String storedId = meta.getPersistentDataContainer().get(key, PersistentDataType.STRING);
         return id.equals(storedId);
+    }
+
+    public void setActivated(ItemStack item, boolean value) {
+        if (item == null || !item.hasItemMeta()) return;
+        ItemMeta meta = item.getItemMeta();
+        PersistentDataContainer data = meta.getPersistentDataContainer();
+        data.set(activeKey, PersistentDataType.INTEGER, value ? 1 : 0);
+        item.setItemMeta(meta);
+    }
+
+    // Read the boolean value
+    public boolean isActivated(ItemStack item) {
+        if (item == null || !item.hasItemMeta()) return false;
+        ItemMeta meta = item.getItemMeta();
+        PersistentDataContainer data = meta.getPersistentDataContainer();
+        return data.getOrDefault(activeKey, PersistentDataType.INTEGER, 0) == 1;
+    }
+
+    // Toggle the flag
+    public void toggleActivated(ItemStack item) {
+        setActivated(item, !isActivated(item));
     }
 
     public abstract void activateEffect(Player player);
