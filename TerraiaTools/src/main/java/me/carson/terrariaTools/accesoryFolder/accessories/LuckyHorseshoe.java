@@ -1,5 +1,7 @@
-package me.carson.terrariaTools.accesories;
+package me.carson.terrariaTools.accesoryFolder.accessories;
 
+import me.carson.terrariaTools.accesoryFolder.Accessory;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -8,10 +10,17 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LuckyHorseshoe extends Accessory implements Listener  {
 
     public LuckyHorseshoe(Plugin plugin){
-        super(plugin,"Lucky Horseshoe","#9696FF",Material.GOLD_BLOCK,"lucky_horseshoe","LuckyHorseshoe");
+        super(plugin,"Lucky Horseshoe","#9696FF",Material.GOLD_BLOCK,"lucky_horseshoe","LuckyHorseshoe",
+                new ArrayList<>(List.of(
+                        ChatColor.GRAY+"Negates fall damage",
+                        ChatColor.GRAY+"'Said to bring good fortune and keep evil spirits at bay'",
+                        ChatColor.GRAY+"Shift Right Click to Activate")));
     }
 
     @Override

@@ -1,8 +1,9 @@
 package me.carson.terrariaTools;
 
-import me.carson.terrariaTools.accesories.AccessoryManager;
+import me.carson.terrariaTools.accesoryFolder.AccessoryManager;
 import me.carson.terrariaTools.recipieManagers.AccessoryRecipeManager;
-import me.carson.terrariaTools.tools.ToolManager;
+import me.carson.terrariaTools.recipieManagers.ToolRecipeManager;
+import me.carson.terrariaTools.toolFolder.ToolManager;
 import me.carson.terrariaTools.weapons.Stormbow;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -23,6 +24,8 @@ public final class TerrariaTools extends JavaPlugin {
 
         AccessoryRecipeManager accessoryRecipeManager = new AccessoryRecipeManager(this);
         accessoryRecipeManager.registerRecipes();
+        ToolRecipeManager toolRecipeManager = new ToolRecipeManager(this);
+        toolRecipeManager.registerRecipes();
 
         getServer().getPluginManager().registerEvents(aManager, this);
         getServer().getPluginManager().registerEvents(tManager, this);

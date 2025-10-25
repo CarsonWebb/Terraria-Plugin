@@ -1,9 +1,10 @@
 package me.carson.terrariaTools;
 
-import me.carson.terrariaTools.accesories.*;
-import me.carson.terrariaTools.tools.Cosmolight;
-import me.carson.terrariaTools.tools.MomentumCapacitor;
-import me.carson.terrariaTools.tools.RodOfDiscord;
+import me.carson.terrariaTools.accesoryFolder.accessories.*;
+import me.carson.terrariaTools.toolFolder.tools.Cosmolight;
+import me.carson.terrariaTools.toolFolder.tools.MagicMirror;
+import me.carson.terrariaTools.toolFolder.tools.MomentumCapacitor;
+import me.carson.terrariaTools.toolFolder.tools.RodOfDiscord;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -75,6 +76,13 @@ public class TTCommand implements CommandExecutor, TabCompleter {
                     case "lucky_horseshoe"-> {
                         player.getInventory().addItem(LuckyHorseshoe.getItem(plugin));
                     }
+                    case "magic_mirror"-> {
+                        player.getInventory().addItem(MagicMirror.getItem(plugin));
+                    }
+                    case "cobalt_shield"-> {
+                        player.getInventory().addItem(CobaltShield.getItem(plugin));
+                    }
+
                     default -> player.sendMessage("§cUnknown item: " + itemName);
                 }
             }
@@ -93,7 +101,7 @@ public class TTCommand implements CommandExecutor, TabCompleter {
             StringUtil.copyPartialMatches(args[0], subCommands, completions);
         } else if (args.length == 2 && args[0].equalsIgnoreCase("give")) {
             // Second argument: item names
-            List<String> items = Arrays.asList("Cosmolight","Rod_of_Discord","Momentum_Capacitor","Stormbow","Cloud_bottle","Aglet","Obsidian_Skull","red_balloon","band_of_regeneration","lucky_horseshoe");
+            List<String> items = Arrays.asList("Cosmolight","Rod_of_Discord","Momentum_Capacitor","Stormbow","Cloud_bottle","Aglet","Obsidian_Skull","red_balloon","band_of_regeneration","lucky_horseshoe","magic_mirror","cobalt_shield");
             StringUtil.copyPartialMatches(args[1], items, completions);
         }
 

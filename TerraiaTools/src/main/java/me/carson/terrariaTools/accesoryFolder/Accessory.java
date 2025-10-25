@@ -1,18 +1,19 @@
-package me.carson.terrariaTools.accesories;
+package me.carson.terrariaTools.accesoryFolder;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
+
+import java.util.ArrayList;
 
 public abstract class Accessory {
 
@@ -22,12 +23,13 @@ public abstract class Accessory {
     protected final Material baseMaterial;
     protected final String texture;
     protected final String id;
+    protected final ArrayList<String> lore;
     private final NamespacedKey activeKey;
     private final NamespacedKey uncraftableKey;
     private final NamespacedKey unplaceableKey;
 
 
-    public Accessory(Plugin plugin, String name, String rarity, Material baseMaterial, String texture, String id){
+    public Accessory(Plugin plugin, String name, String rarity, Material baseMaterial, String texture, String id, ArrayList<String> lore){
         this.plugin = plugin;
         this.name = name;
         this.rarity = rarity;
@@ -37,6 +39,7 @@ public abstract class Accessory {
         uncraftableKey=new NamespacedKey(plugin, "uncraftable");
         unplaceableKey=new NamespacedKey(plugin, "unplaceable");
         activeKey = new NamespacedKey(plugin,"activekey");
+        this.lore = lore;
     }
 
     public ItemStack createItem() {
@@ -44,6 +47,7 @@ public abstract class Accessory {
         ItemMeta meta = item.getItemMeta();
         meta.displayName(Component.text(name, TextColor.fromHexString(rarity)));
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.setLore(lore);
         NamespacedKey key = new NamespacedKey(plugin, "custom_item_id");
         meta.getPersistentDataContainer().set(key, PersistentDataType.STRING, id);
         meta.setItemModel(new NamespacedKey("terraria",texture));
@@ -68,7 +72,16 @@ public abstract class Accessory {
         if (item == null || !item.hasItemMeta()) return;
         ItemMeta meta = item.getItemMeta();
         PersistentDataContainer data = meta.getPersistentDataContainer();
-        data.set(activeKey, PersistentDataType.INTEGER, value ? 1 : 0);
+        ArrayList<String> list= (ArrayList<String>) meta.getLore();
+        if(value){
+            data.set(activeKey, PersistentDataType.INTEGER, 1);
+            list.set(list.size()-1,ChatColor.GRAY+"Shift Right Click to Deactivate");
+        }else{
+            data.set(activeKey, PersistentDataType.INTEGER, 0);
+            list.set(list.size()-1,ChatColor.GRAY+"Shift Right Click to Activate");
+        }
+        meta.setLore(list);
+        meta.setEnchantmentGlintOverride(value);
         item.setItemMeta(meta);
     }
 

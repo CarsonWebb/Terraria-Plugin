@@ -6,3 +6,9 @@ commands:
   tt:
     description: Terraria Tools main command
     usage: /tt <subcommand>
+    permission: terrariatools.tt
+    permission-message: You don't have permission to use this.
+permissions:
+  terrariatools.tt:
+    description: Terraria Tools Commands
+    default: op

@@ -1,13 +1,17 @@
-package me.carson.terrariaTools.accesories;
+package me.carson.terrariaTools.accesoryFolder;
 
-import me.carson.terrariaTools.tools.Tool;
+import me.carson.terrariaTools.accesoryFolder.accessories.*;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.inventory.InventoryAction;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
@@ -28,11 +32,13 @@ public class AccessoryManager implements Listener {
         accessoryItems.add(new BandOfRegeneration(plugin));
         accessoryItems.add(new CloudInBottle(plugin));
         accessoryItems.add(new LuckyHorseshoe(plugin));
+        accessoryItems.add(new CobaltShield(plugin));
 
         //Adds listeners for special cases
         Bukkit.getPluginManager().registerEvents(this, plugin);
         Bukkit.getPluginManager().registerEvents(new LuckyHorseshoe(plugin), plugin);
         Bukkit.getPluginManager().registerEvents(new CloudInBottle(plugin), plugin);
+        Bukkit.getPluginManager().registerEvents(new CobaltShield(plugin), plugin);
     }
 
     public void startAccessoryTask(Plugin plugin) {
@@ -51,16 +57,43 @@ public class AccessoryManager implements Listener {
                 }, 0L, 100L); // Runs every five seconds
     }
 
+    public void deactivateItem(ItemStack itemChecked,Player player){
+        if (!itemChecked.hasItemMeta()) return;
+        for (Accessory item : accessoryItems) {
+            if (item.isThisItem(itemChecked)) {
+                item.deactivateEffect(player);
+                item.setActivated(itemChecked,false);
+            }
+        }
+    }
+
     @EventHandler
     public void onItemDrop(PlayerDropItemEvent event) {
         Player player = event.getPlayer();
         ItemStack droppedItem= event.getItemDrop().getItemStack();
-        if (!droppedItem.hasItemMeta()) return;
-        for (Accessory item : accessoryItems) {
-            if (item.isThisItem(droppedItem)) {
-                item.deactivateEffect(player);
-                item.setActivated(droppedItem,false);
-                droppedItem.getItemMeta().setEnchantmentGlintOverride(false);
+        deactivateItem(droppedItem,player);
+    }
+
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent event) {
+        if (!(event.getWhoClicked() instanceof Player player)) return;
+
+        Inventory topInv = event.getView().getTopInventory();
+        Inventory clickedInv = event.getClickedInventory();
+        Inventory playerInv= player.getInventory();
+
+        // Manual placement
+        if (clickedInv != null && clickedInv.equals(topInv)) {
+            ItemStack cursor = event.getCursor();
+            if (!cursor.getType().isAir()) {
+                deactivateItem(cursor,player);
+            }
+        }
+        // Shift-click movement
+        if (event.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY && clickedInv != null && clickedInv.equals(playerInv)) {
+            ItemStack item = event.getCurrentItem();
+            if (item != null && !item.getType().isAir()) {
+                deactivateItem(item,player);
             }
         }
     }
@@ -73,7 +106,7 @@ public class AccessoryManager implements Listener {
         //handles rapid clicks
         long currentTime = System.currentTimeMillis();
         long lastTime = lastClickTime.getOrDefault(player.getUniqueId(), 0L);
-        // Set a cooldown (e.g. 300 ms)
+
         if (currentTime - lastTime < 500) {
             return; // Ignore repeated right-clicks
         }
@@ -86,12 +119,10 @@ public class AccessoryManager implements Listener {
         if (!heldItem.hasItemMeta()) return;
         for (Accessory item : accessoryItems) {
             if (item.isThisItem(heldItem)) {
-                if(!item.isActivated(heldItem)&&checkAmountActivated(player)){
-                    item.setActivated(heldItem,true);
-                    heldItem.getItemMeta().setEnchantmentGlintOverride(true);
-                }else{
+                if(item.isActivated(heldItem)){
                     item.setActivated(heldItem,false);
-                    heldItem.getItemMeta().setEnchantmentGlintOverride(false);
+                }else if(checkAmountActivated(player)){
+                    item.setActivated(heldItem,true);
                 }
             }
         }
@@ -107,6 +138,9 @@ public class AccessoryManager implements Listener {
                     }
                 }
             }
+        }
+        if (counter >= 5){
+            player.sendMessage(ChatColor.RED+"Can not have more than 5 active Accessories");
         }
         return counter < 5;
     }

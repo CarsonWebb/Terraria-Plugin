@@ -1,6 +1,9 @@
-package me.carson.terrariaTools.tools;
+package me.carson.terrariaTools.toolFolder;
 
-import me.carson.terrariaTools.accesories.*;
+import me.carson.terrariaTools.toolFolder.tools.Cosmolight;
+import me.carson.terrariaTools.toolFolder.tools.MagicMirror;
+import me.carson.terrariaTools.toolFolder.tools.MomentumCapacitor;
+import me.carson.terrariaTools.toolFolder.tools.RodOfDiscord;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,6 +23,7 @@ public class ToolManager implements Listener {
         toolItems.add(new Cosmolight(plugin));
         toolItems.add(new MomentumCapacitor(plugin));
         toolItems.add(new RodOfDiscord(plugin));
+        toolItems.add((new MagicMirror(plugin)));
     }
 
     @EventHandler

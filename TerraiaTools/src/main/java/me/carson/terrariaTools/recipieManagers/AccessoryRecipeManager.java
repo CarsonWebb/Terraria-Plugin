@@ -1,6 +1,6 @@
 package me.carson.terrariaTools.recipieManagers;
 
-import me.carson.terrariaTools.accesories.*;
+import me.carson.terrariaTools.accesoryFolder.accessories.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -22,13 +22,14 @@ public class AccessoryRecipeManager {
         registerBandOfRegenerationRecipe();
         registerRedBalloonRecipe();
         registerHorseshoeRecipe();
+        registerCobaltShieldRecipe();
     }
 
     private void registerAgletRecipe(){
         ItemStack aglet=new Aglet(plugin).createItem();
         NamespacedKey key = new NamespacedKey(plugin, "aglet");
         ShapedRecipe recipe = new ShapedRecipe(key, aglet);
-        recipe.shape(" C ","C C"," C ");
+        recipe.shape("CCC","C C","CCC");
         recipe.setIngredient('C', Material.COPPER_BLOCK);
         Bukkit.addRecipe(recipe);
     }
@@ -67,6 +68,16 @@ public class AccessoryRecipeManager {
         ShapedRecipe recipe = new ShapedRecipe(key, horseshoe);
         recipe.shape("G G","G G","GGG");
         recipe.setIngredient('G', Material.GOLD_BLOCK);
+        Bukkit.addRecipe(recipe);
+    }
+    private void registerCobaltShieldRecipe(){
+        ItemStack cobaltShield=new CobaltShield(plugin).createItem();
+        NamespacedKey key = new NamespacedKey(plugin, "CobaltShield");
+        ShapedRecipe recipe = new ShapedRecipe(key, cobaltShield);
+        recipe.shape("LSL","LNL"," L ");
+        recipe.setIngredient('L', Material.LAPIS_BLOCK);
+        recipe.setIngredient('S', Material.SHIELD);
+        recipe.setIngredient('N', Material.NETHERITE_INGOT);
         Bukkit.addRecipe(recipe);
     }
 
