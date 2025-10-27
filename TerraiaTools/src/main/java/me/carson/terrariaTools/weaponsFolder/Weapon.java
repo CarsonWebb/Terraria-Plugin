@@ -1,4 +1,4 @@
-package me.carson.terrariaTools.toolFolder;
+package me.carson.terrariaTools.weaponsFolder;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
@@ -13,7 +13,7 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 
-public abstract class Tool {
+public abstract class Weapon {
 
     protected final Plugin plugin;
     protected final String name;
@@ -25,9 +25,10 @@ public abstract class Tool {
     protected final ArrayList<String> lore;
     private final NamespacedKey uncraftableKey;
     private final NamespacedKey unplaceableKey;
+    private final NamespacedKey customCraftableKey;
 
 
-    public Tool(Plugin plugin, String name, String rarity, Material baseMaterial, String texture, String id, int cooldown, ArrayList<String> lore) {
+    public Weapon(Plugin plugin, String name, String rarity, Material baseMaterial, String texture, String id, int cooldown, ArrayList<String> lore) {
         this.plugin = plugin;
         this.name = name;
         this.rarity = rarity;
@@ -36,13 +37,15 @@ public abstract class Tool {
         this.id = id;
         uncraftableKey=new NamespacedKey(plugin, "uncraftable");
         unplaceableKey=new NamespacedKey(plugin, "unplaceable");
+        customCraftableKey=new NamespacedKey(plugin, "customCraftable");
         this.cooldown = cooldown;
         this.lore = lore;
     }
 
     public ItemStack createItem() {
-        ItemStack tool = new ItemStack(baseMaterial);
-        ItemMeta meta = tool.getItemMeta();
+        ItemStack weapon = new ItemStack(baseMaterial);
+        ItemMeta meta = weapon.getItemMeta();
+        meta.setUnbreakable(true);
         meta.displayName(Component.text(name, TextColor.fromHexString(rarity)));
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setLore(lore);
@@ -51,9 +54,10 @@ public abstract class Tool {
         meta.setItemModel(new NamespacedKey("terraria", texture));
         meta.getPersistentDataContainer().set(uncraftableKey, PersistentDataType.BYTE, (byte) 1);
         meta.getPersistentDataContainer().set(unplaceableKey, PersistentDataType.BYTE, (byte) 1);
+        meta.getPersistentDataContainer().set(customCraftableKey, PersistentDataType.BYTE, (byte) 1);
         meta.setMaxStackSize(Integer.valueOf(1));
-        tool.setItemMeta(meta);
-        return tool;
+        weapon.setItemMeta(meta);
+        return weapon;
     }
 
     public boolean isThisItem(ItemStack item) {
@@ -66,8 +70,7 @@ public abstract class Tool {
         return id.equals(storedId);
     }
 
-    public abstract void rightActivate(Player player);
+    public abstract void leftActivate(Player player);
 
-    public abstract void cooldownEffect(Player player);
 
 }

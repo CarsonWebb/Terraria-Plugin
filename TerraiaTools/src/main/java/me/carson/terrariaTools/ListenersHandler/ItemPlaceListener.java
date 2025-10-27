@@ -1,4 +1,4 @@
-package me.carson.terrariaTools;
+package me.carson.terrariaTools.ListenersHandler;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

@@ -1,10 +1,17 @@
 package me.carson.terrariaTools;
 
 import me.carson.terrariaTools.accesoryFolder.accessories.*;
+import me.carson.terrariaTools.armourFolder.armours.GoldenCrown;
+import me.carson.terrariaTools.armourFolder.armours.shadowArmour.ShadowGreaves;
+import me.carson.terrariaTools.armourFolder.armours.shadowArmour.ShadowHelmet;
+import me.carson.terrariaTools.armourFolder.armours.shadowArmour.ShadowLeggings;
+import me.carson.terrariaTools.armourFolder.armours.shadowArmour.ShadowScalemail;
+import me.carson.terrariaTools.materialsFolder.materials.DemoniteBar;
 import me.carson.terrariaTools.toolFolder.tools.Cosmolight;
 import me.carson.terrariaTools.toolFolder.tools.MagicMirror;
 import me.carson.terrariaTools.toolFolder.tools.MomentumCapacitor;
 import me.carson.terrariaTools.toolFolder.tools.RodOfDiscord;
+import me.carson.terrariaTools.weaponsFolder.weapons.LightsBane;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -82,6 +89,21 @@ public class TTCommand implements CommandExecutor, TabCompleter {
                     case "cobalt_shield"-> {
                         player.getInventory().addItem(CobaltShield.getItem(plugin));
                     }
+                    case "golden_crown"-> {
+                        player.getInventory().addItem(GoldenCrown.getItem(plugin));
+                    }
+                    case "demonite_bar"-> {
+                        player.getInventory().addItem(DemoniteBar.getItem(plugin));
+                    }
+                    case "lights_bane"-> {
+                        player.getInventory().addItem(LightsBane.getItem(plugin));
+                    }
+                    case "shadow_armour"-> {
+                        player.getInventory().addItem(ShadowHelmet.getItem(plugin));
+                        player.getInventory().addItem(ShadowScalemail.getItem(plugin));
+                        player.getInventory().addItem(ShadowLeggings.getItem(plugin));
+                        player.getInventory().addItem(ShadowGreaves.getItem(plugin));
+                    }
 
                     default -> player.sendMessage("§cUnknown item: " + itemName);
                 }
@@ -101,7 +123,7 @@ public class TTCommand implements CommandExecutor, TabCompleter {
             StringUtil.copyPartialMatches(args[0], subCommands, completions);
         } else if (args.length == 2 && args[0].equalsIgnoreCase("give")) {
             // Second argument: item names
-            List<String> items = Arrays.asList("Cosmolight","Rod_of_Discord","Momentum_Capacitor","Stormbow","Cloud_bottle","Aglet","Obsidian_Skull","red_balloon","band_of_regeneration","lucky_horseshoe","magic_mirror","cobalt_shield");
+            List<String> items = Arrays.asList("Cosmolight","Rod_of_Discord","lights_bane","shadow_armour","Momentum_Capacitor","Stormbow","demonite_bar","Cloud_bottle","Aglet","Obsidian_Skull","red_balloon","band_of_regeneration","lucky_horseshoe","magic_mirror","cobalt_shield","golden_crown");
             StringUtil.copyPartialMatches(args[1], items, completions);
         }
 
